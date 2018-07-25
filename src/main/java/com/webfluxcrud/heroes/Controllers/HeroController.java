@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.server.RequestPredicates;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
+
+import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
 import com.webfluxcrud.heroes.entity.Heroes;
@@ -32,17 +34,17 @@ public class HeroController {
 	HeroRepository heroRepository;
 	
 	@GetMapping
-    public Flux<Heroes> getAllUser() {
+    public Flux<Heroes> getAllHeroes() {
         return heroRepository.findAll();
     }
 	
 	@PostMapping
-    public Mono<Heroes> createUser( @RequestBody Heroes hero) {
+    public Mono<Heroes> createHero( @RequestBody Heroes hero) {
         return heroRepository.save(hero);
     }
 
 	@GetMapping("/{id}")
-    public Mono<ResponseEntity<Heroes>> getUserById(@PathVariable(value = "id") int heroId) {
+    public Mono<ResponseEntity<Heroes>> getHeroById(@PathVariable(value = "id") int heroId) {
         return heroRepository.findById(heroId)
                 .map(savedTweet -> ResponseEntity.ok(savedTweet))
                 .defaultIfEmpty(ResponseEntity.notFound().build());
