@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,6 +49,11 @@ public class HeroController {
         return heroRepository.findById(heroId)
                 .map(savedTweet -> ResponseEntity.ok(savedTweet))
                 .defaultIfEmpty(ResponseEntity.notFound().build());
+    }
+	
+	@DeleteMapping("/{id}")
+    public Mono deleteHeroById(@PathVariable(value = "id") int heroId) {
+        return heroRepository.deleteById(heroId);
     }
 	
 	@Bean
